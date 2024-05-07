@@ -1,0 +1,42 @@
+{
+	"info": {
+		"_postman_id": "5bb12459-cb70-43a5-b936-3d644969f24a",
+		"name": "Inncrawler",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27984697"
+	},
+	"item": [
+		{
+			"name": "rooms",
+			"item": [
+				{
+					"name": "post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"checkin\": \"2024-06-01\",\n    \"checkout\": \"2024-06-05\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API}}/rooms/search",
+							"host": [
+								"{{API}}"
+							],
+							"path": [
+								"rooms",
+								"search"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
