@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.abstract {
+  height: 500px;
+  width: 100%;
+  position: absolute;
+  bottom: -7px;
+  background: url('/assets/wave.png') no-repeat bottom 5% center;
+  background-size: cover;
+}
+
+.overlay {
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.233);
+}
