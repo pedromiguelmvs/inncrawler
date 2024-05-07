@@ -1,0 +1,21 @@
+<div
+  class="relative min-w-[600px] flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+  <img class="object-cover w-full rounded-t-lg h-[200px] md:w-48 md:rounded-none md:rounded-s-lg" [src]="room.image"
+    alt="">
+  <div class="flex flex-col justify-between p-4 leading-normal">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ room.name }}</h5>
+    <p
+      class="whitespace-nowrap mb-3 font-normal text-gray-700 dark:text-gray-400 max-w-[300px] break-all overflow-hidden	text-ellipsis	resize-none">
+      {{ room.description }}</p>
+
+    <footer class="flex justify-between items-center">
+      <h5 class="mb-2 text-xl font-normal tracking-tight text-gray-900 dark:text-white">{{ room.price }}</h5>
+    </footer>
+  </div>
+
+  <button (click)="redirectToViewRoomPage()" type="button" class="absolute right-[20px] bottom-[20px] text-white bg-orange-500 hover:bg-orange-700 focus:ring-4 focus:outline-none focus:ring-orange-300
+    font-medium rounded-lg text-sm px-5 py-2.5 text-center flex justify-center items-center dark:bg-orange-600 dark:hover:bg-orange-700
+    dark:focus:ring-orange-800">
+    Ver mais
+  </button>
+</div>
