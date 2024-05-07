@@ -25,6 +25,12 @@ export class ScraperService {
         .waitForSelector('.room-option-wrapper', {
           timeout: 60000,
         })
+        /**
+         * -> Este .catch() é útil para não cair em uma Exception nos casos abaixo:
+         * 1. Quando houver menos de dois dias de hospedagem;
+         * 2. Quando não houverem reservas disponíveis;
+         * -> Ao invés da Exception, é retornado um array vazio [].
+         */
         .catch(() => {});
 
       const data = await page.evaluate((): RoomInterface[] => {

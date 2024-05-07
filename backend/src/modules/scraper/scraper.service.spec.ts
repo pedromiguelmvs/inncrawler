@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import { ScraperService } from './scraper.service';
+import { SearchRoomDto } from '../rooms/dtos/search-room.dto';
 
 jest.mock('puppeteer');
 
@@ -9,6 +10,21 @@ describe('ScraperService', () => {
   let browser: any;
   let page: any;
 
+  const mock = [
+    {
+      name: 'Room 1',
+      description: 'Description 1',
+      price: '$100',
+      image: 'image1.jpg',
+    },
+    {
+      name: 'Room 2',
+      description: 'Description 2',
+      price: '$200',
+      image: 'image2.jpg',
+    },
+  ];
+
   beforeEach(() => {
     browser = {
       newPage: jest.fn(),
@@ -17,7 +33,7 @@ describe('ScraperService', () => {
     page = {
       goto: jest.fn(),
       waitForNavigation: jest.fn(),
-      waitForSelector: jest.fn(),
+      waitForSelector: () => Promise.resolve(),
       evaluate: jest.fn(),
     };
 
@@ -31,22 +47,32 @@ describe('ScraperService', () => {
     jest.clearAllMocks();
   });
 
-  it('should scrape data correctly', async () => {
-    const mock = [
-      {
-        name: 'Room 1',
-        description: 'Description 1',
-        price: '$100',
-        image: 'image1.jpg',
-      },
-      {
-        name: 'Room 2',
-        description: 'Description 2',
-        price: '$200',
-        image: 'image2.jpg',
-      },
-    ];
+  it('should return an array of rooms', async () => {
+    const dto: SearchRoomDto = {
+      checkin: '2022-06-14',
+      checkout: '2022-06-16',
+    };
 
+    page.evaluate.mockImplementation(() => mock);
+
+    const result = await service.get(dto);
+    expect(result).toBeInstanceOf(Array);
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should return an empty array if no rooms are available', async () => {
+    const dto: SearchRoomDto = {
+      checkin: '2022-06-14',
+      checkout: '2022-06-16',
+    };
+
+    page.evaluate.mockImplementation(() => []);
+
+    const result = await service.get(dto);
+    expect(result).toEqual([]);
+  });
+
+  it('should scrape data correctly', async () => {
     page.evaluate.mockImplementation(() => mock);
     const payload = {
       checkin: '2024-06-20',
@@ -55,11 +81,4 @@ describe('ScraperService', () => {
     const result = await service.get(payload);
     expect(result).toEqual(mock);
   });
-
-  // it('should handle errors gracefully', async () => {
-  //   const mockError = new Error('Test error');
-  //   page.evaluate.mockRejectedValue(mockError);
-
-  //   await expect(service.get()).rejects.toThrowError(mockError);
-  // });
 });
