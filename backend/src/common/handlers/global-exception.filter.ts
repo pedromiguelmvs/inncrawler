@@ -14,10 +14,14 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    const message = 'Algo deu errado, tente novamente mais tarde!';
+    let message = 'Algo deu errado, tente novamente mais tarde!';
 
     if (exception instanceof HttpException) {
       status = exception.getStatus();
+
+      if (exception.name === 'BadRequestException') {
+        message = (exception.getResponse() as any).message;
+      }
     }
 
     response.status(status).json({
